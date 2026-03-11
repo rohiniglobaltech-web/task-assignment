@@ -24,6 +24,8 @@ async function bootstrap() {
   process.on('SIGINT', shutdown);
   process.on('SIGTERM', shutdown);
 
-  await app.listen(process.env.PORT ?? 3000);
+  const port = Number(process.env.PORT ?? 3000);
+  // Render (and most PaaS) require binding to 0.0.0.0 and using the provided PORT.
+  await app.listen(port, '0.0.0.0');
 }
 bootstrap();
